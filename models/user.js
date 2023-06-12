@@ -28,9 +28,10 @@ const UserSchema = Schema({
     }
 });
 
-// UserSchema.methods.toJSON = function() {
-//     const {__v, password, ...user} = this.toObject();
-//     return user;
-// }
+UserSchema.methods.toJSON = function() {
+    const {__v, password, _id, ...user} = this.toObject();
+    user.uuid = _id;
+    return user;
+}
 
 export default model('User', UserSchema);

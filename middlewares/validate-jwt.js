@@ -1,6 +1,6 @@
 import { request, response } from "express";
 import * as jwt from 'jsonwebtoken';
-import User from "../models/user";
+import User from "../models/user.js";
 
 
 //Middleware to validate the JWT

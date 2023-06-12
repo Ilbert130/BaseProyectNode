@@ -16,4 +16,6 @@ router.get('/', (req = request, res = response) => {
 
 
 
-export default router;
+export {
+    router
+}

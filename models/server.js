@@ -1,7 +1,7 @@
-import express, {Application} from 'express';
-import dbConnection from '../db/connection';
+import express from 'express';
+import dbConnection from '../db/connection.js';
 import cors from 'cors';
-import { UserRoutes } from '../routes';
+import {router as UserRoutes} from '../routes/users.js';
 
 
 class Server {
@@ -13,6 +13,15 @@ class Server {
         this.paths = {
             users: '/api/users'
         }
+
+        //Connect to db
+        this.connecteDB();
+
+        //Middlewares
+        this.middlewares()
+
+        //Routes
+        this.routes()
     }
 
     async connecteDB() {

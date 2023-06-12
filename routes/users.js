@@ -1,4 +1,5 @@
 import { Router, request, response } from "express";
+import { userGet } from "../controllers/users.js";
 
 
 
@@ -6,13 +7,7 @@ import { Router, request, response } from "express";
 const router = Router();
 
 //GET: All
-router.get('/', (req = request, res = response) => {
-    
-    res.json({
-        msg: 'Route configure'
-    })
-
-})
+router.get('/', userGet)
 
 
 

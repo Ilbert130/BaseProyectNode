@@ -1,32 +1,22 @@
-import { Schema, model } from "mongoose";
+import { request, response } from "express";
+import User from '../models/user.js';
 
-const UserSchema = Schema({
-    name: {
-        type: String,
-        required: [true, 'The name is required']
-    },
-    correo: {
-        type: String,
-        required: [true, 'The email is required'],
-        unique: true
-    },
-    img: {
-        type:String
-    },
-    role: {
-        type: String, 
-        required: true,
-        default: 'USER_ROLE'
-    },
-    state: {
-        type: Boolean,
-        default: true
-    }
-});
 
-UserSchema.methods.toJSON = function() {
-    const {__v, password, ...user} = this.toObject();
-    return user;
+
+export const userGet = async(req=request, res= response) => {
+
+    const {limit = 5, since = 0} = req.query;
+    const query = {state:true};
+
+    const [total, users] = await Promise.all([
+        User.countDocuments(query),
+        User.find(query)
+            .skip(+since)
+            .limit(+limit)
+    ]);
+
+    res.json({
+        total,
+        users
+    })
 }
-
-export default model('User', UserSchema);

@@ -1,6 +1,6 @@
 import { Router, request, response } from "express";
 import { userGet } from "../controllers/users.js";
-
+import { validatorUserPOST } from "../helpers/validators-user.js";
 
 
 

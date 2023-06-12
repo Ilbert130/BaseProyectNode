@@ -17,11 +17,11 @@ const UserSchema = Schema({
     img: {
         type:String
     },
-    role: {
-        type: String, 
+    role: [{
+        type: Schema.Types.ObjectId, 
+        ref: 'Role',
         required: true,
-        default: 'USER_ROLE'
-    },
+    }],
     state: {
         type: Boolean,
         default: true

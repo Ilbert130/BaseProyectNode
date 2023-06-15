@@ -1,6 +1,6 @@
 import { request, response } from "express";
 import User from '../models/user.js';
-import * as bcryptjs from 'bcryptjs'
+import bcryptjs from 'bcryptjs'
 
 
 //GET": All
@@ -13,7 +13,7 @@ export const usersGet = async(req=request, res= response) => {
             User.countDocuments(query),
             User.find(query)
                 .skip(+since)
-                .limit(+limit).populate()
+                .limit(+limit).populate('role','role')
         ]);
 
         res.json({
@@ -32,10 +32,10 @@ export const userGet = async(req = request, res = response) => {
     try {
         
         const {id} = req.params;
-        const user = await User.findOne({_id:id, state:true}).populate();
+        const user = await User.findOne({_id:id, state:true}).populate('role','role');
 
         res.json({
-            role
+            user
         });
 
     } catch (error) {
@@ -48,10 +48,10 @@ export const userGet = async(req = request, res = response) => {
 export const userPost = async(req = request, res = response) => {
     try {
         
-        const {name, email, password, img='', role} = req.body;
+        const {name, email, password, img='No_Image_Available.jpg', role} = req.body;
         const user = new User({name, email, password, img, role});
 
-        const salt = bcryptjs.genSaltSync();
+        const salt = bcryptjs.genSaltSync(10);
         user.password = bcryptjs.hashSync(password, salt);
 
         await user.save();
@@ -67,9 +67,14 @@ export const userPost = async(req = request, res = response) => {
 export const userPut = async(req = request, res = response) => { 
     try {
         const {id} = req.params;
-        const user = req.body;
+        const {password, ...resto} = req.body;
 
-        const userUpdate = await User.findOneAndUpdate({_id:id, state:true}, {user}, {new:true})
+        if(password){
+            const salt = bcryptjs.genSaltSync();
+            resto.password = bcryptjs.hashSync(password, salt);
+        }
+
+        const userUpdate = await User.findOneAndUpdate({_id:id, state:true}, {...resto}, {new:true});
 
         res.json({
             user:userUpdate

@@ -7,7 +7,7 @@ import { roleVerification } from "../middlewares/validate-roles.js";
 
 //verifying if a user exist by its id
 const existUserById = async(id) => {
-    const userById = await User.findById(id);
+    const userById = await User.findOne({_id:id, state:true});
     if(!userById){
         throw new Error(`The user with id ${id} doesn't exist`);
     }
@@ -24,14 +24,14 @@ const existEmail = async(email) => {
 //GET
 export const validatorUserGET = [
     check('id', 'The id is not valid').isMongoId(),
-    check('id').custom(id => existBookById(id)),
+    check('id').custom(id => existUserById(id)),
     validateFields
 ]
 
 //POST
 export const validatorUserPOST = [
-    validateJWT,
-    roleVerification('ADMIN_ROLE'),
+    // validateJWT,
+    // roleVerification('ADMIN_ROLE'),
     check('email', 'The email address is not valid').isEmail(),
     check('email').custom(email => existEmail(email)),
     check('name', 'The name is required').not().isEmpty(),
@@ -42,13 +42,13 @@ export const validatorUserPOST = [
 //PUT
 export const validatorUserPUT = [
     check('id', 'The id is not valid').isMongoId(),
-    check('id').custom(id => existBookById(id)),
+    check('id').custom(id => existUserById(id)),
     validateFields
 ]
 
 //DELETE
 export const validatorUserDELETE = [
     check('id', 'The id is not valid').isMongoId(),
-    check('id').custom(id => existBookById(id)),
+    check('id').custom(id => existUserById(id)),
     validateFields
 ]

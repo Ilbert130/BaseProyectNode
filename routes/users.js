@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { userDelete, userGet, userPost, userPut, usersGet } from "../controllers/users.js";
-import { validatorUserPOST } from "../helpers/validators-user.js";
+import { validatorUserDELETE, validatorUserGET, validatorUserPOST, validatorUserPUT } from "../helpers/validators-user.js";
 
 
 
@@ -10,16 +10,16 @@ const router = Router();
 router.get('/', usersGet);
 
 //GET
-router.get('/:id', userGet);
+router.get('/:id', validatorUserGET, userGet);
 
 //POST
-router.post('/', userPost);
+router.post('/', validatorUserPOST, userPost);
 
 //PUT
-router.put('/:id', userPut);
+router.put('/:id', validatorUserPUT, userPut);
 
 //DELETE
-router.delete('/:id', userDelete);
+router.delete('/:id', validatorUserDELETE, userDelete);
 
 export {
     router

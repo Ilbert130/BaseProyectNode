@@ -30,9 +30,8 @@ export const roleGet = async(req = request, res = response) => {
     try {
 
         const {id} = req.params;
-        const query = {state:true};
 
-        const role = await Role.findOne({_id:id, state:query});
+        const role = await Role.findOne({_id:id, state:true});
 
         res.json({
             role
@@ -73,10 +72,9 @@ export const rolePost = async(req = request, res = response) => {
 export const rolePut = async(req = request, res = response) => {
     try {
         const {id} = req.params;
-        const query = {state:true};
         const role = req.body.role.toUpperCase();
 
-        const roleUpdate = await Role.findOneAndUpdate({_id:id, state:query}, {role}, {new:true});
+        const roleUpdate = await Role.findOneAndUpdate({_id:id, state:true}, {role}, {new:true});
 
         res.json({
             role:roleUpdate
@@ -92,9 +90,8 @@ export const roleDelete = async(req = request, res = response) => {
     try {
         
         const {id} = req.params;
-        const query = {state:true};
         
-        const role = await Role.findOneAndUpdate({_id:id, state:query}, {state:false}, {new:true});
+        const role = await Role.findOneAndUpdate({_id:id, state:true}, {state:false}, {new:true});
         
         res.json({
             role

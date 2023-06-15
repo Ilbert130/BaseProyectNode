@@ -22,6 +22,7 @@ export const rolesGet = async(req = request, res = response) => {
         
     } catch (error) {
         console.log(error);
+        throw new Error(error);
     }
 }
 
@@ -30,7 +31,6 @@ export const roleGet = async(req = request, res = response) => {
     try {
 
         const {id} = req.params;
-
         const role = await Role.findOne({_id:id, state:true});
 
         res.json({
@@ -39,6 +39,7 @@ export const roleGet = async(req = request, res = response) => {
         
     } catch (error) {
         console.log(error);
+        throw new Error(error);
     }
 }
 
@@ -65,6 +66,7 @@ export const rolePost = async(req = request, res = response) => {
 
     } catch (error) {
         console.log(error);
+        throw new Error(error);
     }
 }
 
@@ -82,6 +84,7 @@ export const rolePut = async(req = request, res = response) => {
 
     } catch (error) {
         console.log(error);
+        throw new Error(error);
     }
 }
 
@@ -99,5 +102,6 @@ export const roleDelete = async(req = request, res = response) => {
 
     } catch (error) {
         console.log(error);
+        throw new Error(error);
     }
 }

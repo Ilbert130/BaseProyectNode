@@ -10,7 +10,6 @@ const existRole = async(id) => {
     }
 }
 
-
 //GET
 export const validateRoleGET = [
     check('id', 'Is not a valid id').isMongoId(),

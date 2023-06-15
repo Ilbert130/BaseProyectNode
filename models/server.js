@@ -4,6 +4,7 @@ import cors from 'cors';
 import {router as UserRoutes} from '../routes/users.js';
 import {router as RoleRoutes} from '../routes/roles.js';
 import {router as AuthRoutes} from '../routes/auth.js';
+import {router as ProductRoutes} from '../routes/products.js';
 
 
 class Server {
@@ -46,9 +47,10 @@ class Server {
     }
 
     routes(){
-        this.app.use(this.paths.users, UserRoutes);
-        this.app.use(this.paths.roles, RoleRoutes);
         this.app.use(this.paths.auth, AuthRoutes);
+        this.app.use(this.paths.users, UserRoutes);
+        this.app.use(this.paths.roles, RoleRoutes); 
+        this.app.use(this.paths.products, ProductRoutes);
     }
 
     listen(){

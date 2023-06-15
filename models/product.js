@@ -6,7 +6,7 @@ const ProductSchema =  Schema({
         required: [true, 'The name is required'],
         unique: true
     },
-    descripcion: { 
+    description: { 
         type: String 
     },
     img: {

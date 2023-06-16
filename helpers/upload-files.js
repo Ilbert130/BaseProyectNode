@@ -1,6 +1,9 @@
 import {v4 as uuid} from 'uuid';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export const uploadFile = (files, validExtension = ['png', 'jpg', 'jpeg', 'gif', 'img'], directory = '') => {
 

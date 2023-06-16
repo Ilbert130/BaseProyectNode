@@ -5,6 +5,7 @@ import {router as UserRoutes} from '../routes/users.js';
 import {router as RoleRoutes} from '../routes/roles.js';
 import {router as AuthRoutes} from '../routes/auth.js';
 import {router as ProductRoutes} from '../routes/products.js';
+import {router as UploadRoutes} from '../routes/uploads.js';
 import fileUpload from 'express-fileupload';
 
 
@@ -18,7 +19,8 @@ class Server {
             users: '/api/users',
             roles: '/api/roles',
             products: '/api/products',
-            auth: '/api/auth'
+            auth: '/api/auth',
+            uploads: '/api/uploads'
         }
 
         //Connect to db
@@ -30,11 +32,6 @@ class Server {
         //Routes
         this.routes();
 
-        this.app.use(fileUpload({
-            useTempFiles:true,
-            tempFileDir:'/tmp/',
-            createParentPath: true
-        }));
     }
 
     async connecteDB() {
@@ -51,6 +48,12 @@ class Server {
 
         //Setting public directory
         this.app.use(express.static('public'));
+
+        this.app.use(fileUpload({
+            useTempFiles : true,
+            tempFileDir : '/tmp/',
+            createParentPath: true 
+        }));
     }
 
     routes(){
@@ -58,6 +61,7 @@ class Server {
         this.app.use(this.paths.users, UserRoutes);
         this.app.use(this.paths.roles, RoleRoutes); 
         this.app.use(this.paths.products, ProductRoutes);
+        this.app.use(this.paths.uploads, UploadRoutes);
     }
 
     listen(){

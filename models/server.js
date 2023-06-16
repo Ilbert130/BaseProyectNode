@@ -5,6 +5,7 @@ import {router as UserRoutes} from '../routes/users.js';
 import {router as RoleRoutes} from '../routes/roles.js';
 import {router as AuthRoutes} from '../routes/auth.js';
 import {router as ProductRoutes} from '../routes/products.js';
+import fileUpload from 'express-fileupload';
 
 
 class Server {
@@ -24,10 +25,16 @@ class Server {
         this.connecteDB();
 
         //Middlewares
-        this.middlewares()
+        this.middlewares();
 
         //Routes
-        this.routes()
+        this.routes();
+
+        this.app.use(fileUpload({
+            useTempFiles:true,
+            tempFileDir:'/tmp/',
+            createParentPath: true
+        }));
     }
 
     async connecteDB() {

@@ -13,7 +13,7 @@ export const productsGet = async(req=request, res= response) => {
             Product.countDocuments(query),
             Product.find(query)
                 .skip(+since)
-                .limit(+limit).populate('role','role')
+                .limit(+limit).populate('user','email')
         ]);
 
         res.json({
@@ -22,7 +22,7 @@ export const productsGet = async(req=request, res= response) => {
         });
 
     } catch (error) {
-        console.log(error);
+        console.log(error);k
         throw new Error(error);
     }
 }
@@ -31,7 +31,7 @@ export const productsGet = async(req=request, res= response) => {
 export const productGet = async(req = request, res = response) => {
     try {
         const {id} = req.params;
-        const product = await Product.findOne({_id:id, state:true}).populate();
+        const product = await Product.findOne({_id:id, state:true}).populate('user','email');
 
         res.json({
             product
@@ -63,9 +63,38 @@ export const productPost = async(req = request, res = response) => {
 }
 
 //PUT
-// export const productPut
+export const productPut = async(req = request, res = response) => {
+    try {
+        
+        const {id} = req.params;
+        const product = req.body;
+
+        const productUpdate = await Product.findOneAndUpdate({_id:id, state:true}, {...product}, {new:true});
+
+        res.json({
+            product:productUpdate
+        });
+
+    } catch (error) {
+        console.log(error);
+        throw new Error(error);
+    }
+}
 
 //DELETE
+export const productDelete = async(req = request, res = response) => {
+    try {
+        const {id} = req.params;
+        const product = await Product.findOneAndUpdate({_id:id, state:true}, {state:false}, {new:true});
 
+        res.json({
+            product
+        });
+        
+    } catch (error) {
+        console.log(error);
+        throw new Error(error);
+    }
+}
 
 

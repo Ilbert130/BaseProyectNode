@@ -1,15 +1,18 @@
-import { Router, request, response } from "express";
-
-
+import { Router } from "express";
+import { productDelete, productGet, productPost, productPut, productsGet } from "../controllers/products.js";
 
 
 const router = Router();
 
-router.get('/', (req=request, res=response) => {
-    res.json({
-        msg: 'Product required'
-    })
-})
+router.get('/', productsGet);
+
+router.get('/:id', productGet);
+
+router.post('/', productPost);
+
+router.put('/:id', productPut);
+
+router.delete('/:id', productDelete)
 
 export {
     router

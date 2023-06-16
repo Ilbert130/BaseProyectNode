@@ -48,7 +48,7 @@ export const userGet = async(req = request, res = response) => {
 export const userPost = async(req = request, res = response) => {
     try {
         
-        const {name, email, password, img='No_Image_Available.jpg', role} = req.body;
+        const {name, email, password, img='No_Image_Available.jpg', role = ["648bb7177748b81484350f7c"]} = req.body;
         const user = new User({name, email, password, img, role});
 
         const salt = bcryptjs.genSaltSync(10);
